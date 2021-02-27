@@ -47,7 +47,8 @@ export default function Chat() {
       method: 'POST',
       body: JSON.stringify({
         content: messageValue.message,
-        userId: process.env.REACT_APP_USER_ID,
+        // userId: process.env.REACT_APP_USER_ID,
+        userId: userID,
       }),
     })
     if (response.status === 204) {
