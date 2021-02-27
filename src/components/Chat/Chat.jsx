@@ -36,23 +36,6 @@ export default function Chat() {
     })
   }
 
-  async function loadMessages() {
-    const response = await fetch(
-      `${process.env.REACT_APP_MESSAGE_URL}?from=${listOfMessages.latestID}`,
-      {
-        method: 'GET',
-      }
-    )
-    const json = await response.json()
-    const prevMessage = listOfMessages.messages
-    console.log(json)
-    setListOfMessages(() => ({
-      messages: [...prevMessage, ...json],
-      latestID: json[json.length - 1].id,
-    }))
-    console.log(listOfMessages.messages)
-  }
-
   async function sendMessage() {
     const response = await fetch(process.env.REACT_APP_MESSAGE_URL, {
       method: 'POST',
@@ -62,19 +45,33 @@ export default function Chat() {
       }),
     })
     if (response.status === 204) {
-      loadMessages()
+      // loadMessages()
     }
   }
 
-  const latestID = listOfMessages.latestID
-
   useEffect(() => {
-    loadMessages()
-    // const timeout = setTimeout(() => loadMessages(), 1000)
-    // return () => {
-    //   clearTimeout(timeout)
-    // }
-  }, [])
+    async function loadMessages() {
+      const response = await fetch(
+        `${process.env.REACT_APP_MESSAGE_URL}?from=${listOfMessages.latestID}`,
+        {
+          method: 'GET',
+        }
+      )
+      const json = await response.json()
+      if (json.length) {
+        const prevMessage = listOfMessages.messages
+        setListOfMessages(() => ({
+          messages: [...prevMessage, ...json],
+          latestID: json[json.length - 1].id,
+        }))
+      }
+    }
+
+    const timeout = setInterval(() => loadMessages(), 1000)
+    return () => {
+      clearInterval(timeout)
+    }
+  }, [listOfMessages])
 
   return (
     <ChatWrapper>
