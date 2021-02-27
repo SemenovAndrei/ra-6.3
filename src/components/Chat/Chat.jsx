@@ -40,7 +40,8 @@ export default function Chat() {
 
   async function sendMessage() {
     // const response = await fetch(process.env.REACT_APP_MESSAGE_URL, {
-    const response = await fetch(process.env.REACT_APP_MESSAGE_URL_HEROKU, {
+    // const response = await fetch(process.env.REACT_APP_MESSAGE_URL_HEROKU, {
+    const response = await fetch('https://ra-6-3-server.herokuapp.com/messages', {
       method: 'POST',
       body: JSON.stringify({
         content: messageValue.message,
@@ -56,7 +57,8 @@ export default function Chat() {
     async function loadMessages() {
       const response = await fetch(
         // `${process.env.REACT_APP_MESSAGE_URL}?from=${listOfMessages.latestID}`,
-        `${process.env.REACT_APP_MESSAGE_URL_HEROKU}?from=${listOfMessages.latestID}`,
+        // `${process.env.REACT_APP_MESSAGE_URL_HEROKU}?from=${listOfMessages.latestID}`,
+        `https://ra-6-3-server.herokuapp.com/messages?from=${listOfMessages.latestID}`,
         {
           method: 'GET',
         }
