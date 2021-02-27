@@ -19,31 +19,39 @@ const ListWrapper = styled.div`
 const MyMessage = styled.div`
   position: relative;
   align-self: flex-end;
-  width: 40%;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: rgba(81, 255, 0, 0.555);
+  width: 45%;
+  padding-top: 5px;
+  padding-bottom: 5px;
+
+  & div {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    white-space: pre;
+    border-radius: 10px;
+    background-color: rgba(81, 255, 0, 0.555);
+  }
 `
 const OtherMessage = styled(MyMessage)`
   align-self: flex-start;
-  background-color: rgba(53, 211, 177, 0.281);
+
+  & div {
+    background-color: rgba(53, 211, 177, 0.281);
+  }
 `
 
 function ListOfMessages(props) {
-  console.log(props)
   const messages = props.messages.map((message) => {
     if (message.userId === process.env.REACT_APP_USER_ID) {
       return (
         <MyMessage id={message.id} key={message.id}>
-          {message.content}
+          <div>{message.content}</div>
         </MyMessage>
       )
     }
     return (
       <OtherMessage id={message.id} key={message.id}>
-        {message.content}
+        <div>{message.content}</div>
       </OtherMessage>
     )
   })

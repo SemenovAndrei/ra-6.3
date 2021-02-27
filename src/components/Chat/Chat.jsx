@@ -29,11 +29,6 @@ export default function Chat() {
     }))
   }
 
-  const handleKeyDown = () => {
-    setMessageValue((prev) => prev + '12!')
-    console.log('123', messageValue.message)
-  }
-
   const onSubmit = () => {
     sendMessage()
     setMessageValue({
@@ -43,13 +38,19 @@ export default function Chat() {
 
   async function loadMessages() {
     const response = await fetch(
-      `${process.env.REACT_APP_MESSAGE_URL}?from=${ListOfMessages.latestID}`,
+      `${process.env.REACT_APP_MESSAGE_URL}?from=${listOfMessages.latestID}`,
       {
         method: 'GET',
       }
     )
     const json = await response.json()
-    setListOfMessages(() => ({ messages: json, latestID: json[json.length - 1].id }))
+    const prevMessage = listOfMessages.messages
+    console.log(json)
+    setListOfMessages(() => ({
+      messages: [...prevMessage, ...json],
+      latestID: json[json.length - 1].id,
+    }))
+    console.log(listOfMessages.messages)
   }
 
   async function sendMessage() {
@@ -65,9 +66,15 @@ export default function Chat() {
     }
   }
 
-  console.log(listOfMessages)
+  const latestID = listOfMessages.latestID
 
-  useEffect(() => loadMessages(), [])
+  useEffect(() => {
+    loadMessages()
+    // const timeout = setTimeout(() => loadMessages(), 1000)
+    // return () => {
+    //   clearTimeout(timeout)
+    // }
+  }, [])
 
   return (
     <ChatWrapper>
@@ -76,7 +83,6 @@ export default function Chat() {
         <Form
           messageValue={messageValue.message || messageValue.empty}
           onChange={handleMessage}
-          onKeyDown={handleKeyDown}
           onSubmit={onSubmit}
         />
       </Separator>

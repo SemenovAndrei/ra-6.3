@@ -37,12 +37,6 @@ function Form(props) {
     props.onSubmit()
   }
 
-  const onKeyDown = (event) => {
-    if (event.key === 'Enter') {
-      props.onKeyDown()
-    }
-  }
-
   return (
     <FormWrapper onSubmit={onSubmit}>
       <TextArea
@@ -51,7 +45,6 @@ function Form(props) {
         placeholder="Enter your message"
         value={props.messageValue}
         onChange={onChange}
-        onKeyDown={onKeyDown}
       ></TextArea>
       <Button>Send</Button>
     </FormWrapper>
