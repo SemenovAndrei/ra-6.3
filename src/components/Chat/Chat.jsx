@@ -30,14 +30,17 @@ export default function Chat() {
   }
 
   const onSubmit = () => {
-    sendMessage()
+    if (messageValue.message.trim()) {
+      sendMessage()
+    }
     setMessageValue({
       empty: '',
     })
   }
 
   async function sendMessage() {
-    const response = await fetch(process.env.REACT_APP_MESSAGE_URL, {
+    // const response = await fetch(process.env.REACT_APP_MESSAGE_URL, {
+    const response = await fetch(process.env.REACT_APP_MESSAGE_URL_HEROKU, {
       method: 'POST',
       body: JSON.stringify({
         content: messageValue.message,
@@ -52,12 +55,14 @@ export default function Chat() {
   useEffect(() => {
     async function loadMessages() {
       const response = await fetch(
-        `${process.env.REACT_APP_MESSAGE_URL}?from=${listOfMessages.latestID}`,
+        // `${process.env.REACT_APP_MESSAGE_URL}?from=${listOfMessages.latestID}`,
+        `${process.env.REACT_APP_MESSAGE_URL_HEROKU}?from=${listOfMessages.latestID}`,
         {
           method: 'GET',
         }
       )
       const json = await response.json()
+
       if (json.length) {
         const prevMessage = listOfMessages.messages
         setListOfMessages(() => ({
