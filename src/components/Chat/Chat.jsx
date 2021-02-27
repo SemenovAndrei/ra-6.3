@@ -12,6 +12,8 @@ const Separator = styled.div`
   border-top: 2px solid #892dd4;
 `
 
+const userID = 'userID'
+
 export default function Chat() {
   const [messageValue, setMessageValue] = useState({
     empty: '',
@@ -82,7 +84,7 @@ export default function Chat() {
 
   return (
     <ChatWrapper>
-      <ListOfMessages {...listOfMessages} />
+      <ListOfMessages {{...listOfMessages, userID: userID}} />
       <Separator>
         <Form
           messageValue={messageValue.message || messageValue.empty}

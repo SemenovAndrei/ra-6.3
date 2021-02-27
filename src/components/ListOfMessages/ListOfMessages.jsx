@@ -42,7 +42,7 @@ const OtherMessage = styled(MyMessage)`
 
 function ListOfMessages(props) {
   const messages = props.messages.map((message) => {
-    if (message.userId === process.env.REACT_APP_USER_ID) {
+    if (message.userId === props.userID) {
       return (
         <MyMessage id={message.id} key={message.id}>
           <div>{message.content}</div>
