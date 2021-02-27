@@ -85,7 +85,7 @@ export default function Chat() {
 
   return (
     <ChatWrapper>
-      <ListOfMessages {{...listOfMessages, userID: userID}} />
+      <ListOfMessages {...listOfMessages} userID={userID} />
       <Separator>
         <Form
           messageValue={messageValue.message || messageValue.empty}
