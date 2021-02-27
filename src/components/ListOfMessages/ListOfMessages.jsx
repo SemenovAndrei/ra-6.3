@@ -27,7 +27,7 @@ const MyMessage = styled.div`
     padding: 10px;
     margin-top: 5px;
     margin-bottom: 5px;
-    white-space: pre;
+    white-space: pre-line;
     border-radius: 10px;
     background-color: rgba(81, 255, 0, 0.555);
   }

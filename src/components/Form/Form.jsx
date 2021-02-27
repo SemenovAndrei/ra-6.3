@@ -46,7 +46,7 @@ function Form(props) {
         value={props.messageValue}
         onChange={onChange}
       ></TextArea>
-      <Button>Send</Button>
+      {props.messageValue && <Button>Send</Button>}
     </FormWrapper>
   )
 }
